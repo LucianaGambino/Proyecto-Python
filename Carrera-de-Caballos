@@ -1,0 +1,105 @@
+# Declaración de variables
+meta = int();
+jugador1_pos = int();
+jugador2_pos = int();
+avance_jugador1 = int();
+avance_jugador2 = int();
+opcion_menu = str();
+cierre = int();
+meta_texto = str();
+
+# Inicialización de variables
+meta = 0;
+jugador1_pos = 0;
+jugador2_pos = 0;
+avance_jugador1 = 0;
+avance_jugador2 = 0;
+opcion_menu = "";
+cierre = 0;
+meta_texto = "";
+
+# INICIO DEL PROGRAMA
+import random
+
+# --- DEFINICIÓN DE FUNCIONES ---
+
+def imprimir_pista(pos1, pos2, meta):
+    print("--------------------------------");
+    # Carril del Jugador 1
+    print("P1: ", end="");
+    for i in range(meta):
+        if i == pos1:
+            print("🐎", end=""); # Si el ciclo llega a la posición del caballo, lo dibuja
+        else:
+            print("_", end=""); # Si no, dibuja un caminito
+    print(" | META");
+
+    # Carril del Jugador 2
+    print("P2: ", end="");
+    for i in range(meta):
+        if i == pos2:
+            print("🏇", end="");
+        else:
+            print("_", end="");
+    print(" | META");
+    print("--------------------------------");
+
+def carrera_de_caballos():
+    print("\n--- NUEVA CARRERA ---");
+    meta_texto = input("¿Cuántos pasos tiene la pista?: ");
+    meta = int(meta_texto);
+
+    pos1 = 0; 
+    pos2 = 0; 
+
+    # Bucle de la carrera
+    while pos1 < meta and pos2 < meta:
+        input("Presiona ENTER para avanzar...");
+
+        # Avanzar aleatoriamente
+        avance1 = random.randint(1, 3);
+        avance2 = random.randint(1, 3);
+
+        pos1 = pos1 + avance1
+        pos2 = pos2 + avance2
+
+        # Ajuste para el dibujo 
+        dibujo_pos1 = pos1
+        if dibujo_pos1 >= meta:
+            dibujo_pos1 = meta - 1
+            
+        dibujo_pos2 = pos2
+        if dibujo_pos2 >= meta:
+            dibujo_pos2 = meta - 1
+
+        # Mostrar la pista
+        imprimir_pista(dibujo_pos1, dibujo_pos2, meta);
+        print("J1 avanzó", avance1, "(Total:", pos1, ")");
+        print("J2 avanzó", avance2, "(Total:", pos2, ")");
+
+    # Determinar ganador
+    if pos1 >= meta and pos2 >= meta:
+        print("\n¡EMPATE!");
+    elif pos1 >= meta:
+        print("\n¡GANÓ EL JUGADOR 1!");
+    else:
+        print("\n¡GANÓ EL JUGADOR 2!");
+
+# --- MENÚ PRINCIPAL ---
+cierre = 0;
+while cierre == 0:
+    print("\n--- MENÚ DEL JUEGO ---");
+    print("1. Iniciar carrera");
+    print("2. Salir");
+    
+    opcion = input("Elige una opción: ");
+
+    if opcion == "1":
+        carrera_de_caballos();
+    elif opcion == "2":
+        print("Saliendo... ¡Adiós!");
+        cierre = 1 # Esto rompe el bucle while y termina el programa
+    else:
+        print("Opción no válida.");
+
+# FIN DEL PROGRAMA
